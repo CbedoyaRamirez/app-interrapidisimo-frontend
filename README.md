@@ -19,3 +19,7 @@ consultMaterias.services.ts
 consultProfesor.services.ts
 
 Las rutas solo estan las ruta del enpoint sin el destino, ya que Eclipse se encarga de completar la URL
+
+## Manual de usuario
+
+En la raiz de este proyecto existe el manual de usuario : ManualUsuario.docx
