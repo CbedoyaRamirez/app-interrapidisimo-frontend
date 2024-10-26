@@ -1,14 +1,18 @@
 # AppInterrapidisimo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
+Este proyecto fue generado en [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13 y node version 16.10.0
 
-## Development server
+## Instalar
+
+Ejecutar `npm install` para instalar las dependencias
+
+## Desplegar
 
 Ejecute `ng serve` navegue hasta `http://localhost:4200/`. 
 
 ## Posibles errores
 
-En dado caso de no ejecutarse los endpoints se debe cambiar los siguientes archivos
+En dado caso de no ejecutarse los endpoints se debe cambiar los siguientes archivos y cambiar la url de los mismos.
 
 consultEstudiante.services.ts
 consultMaterias.services.ts
