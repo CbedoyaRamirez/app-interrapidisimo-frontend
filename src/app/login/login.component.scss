@@ -1,0 +1,17 @@
+.inter-register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.inter-button {
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    color: #fff;
+    background-color: rgb(91, 117, 175);
+    cursor: pointer;
+}

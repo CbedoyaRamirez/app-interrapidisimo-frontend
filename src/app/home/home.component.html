@@ -1,0 +1,19 @@
+<div class="title" >
+    <h1>Elegir solamente 3 materias</h1>
+</div>
+<div class="card-container">
+    <div class="card-materia" *ngFor="let item of listMaterias; let i = index" >
+        <label>Nombre Materia : {{item.nombre}}</label>
+        <label>Creditos Materia : {{item.creditos}}</label>
+        <input type="checkbox"  (change)="getCheckMateria($event, i)" />
+        <button (click)="getProfesoresMateria(item.id, i)" >Ver profesores</button>
+        <div *ngIf="item.showDetails" >
+            <div class="card-profesores"  *ngFor="let item of listMateriasProfesores">
+                <label>Nombre Profesor : {{item.nombres}}</label>
+            </div>            
+        </div>
+    </div>
+</div>
+<div class="button" >
+    <button (click)="acceptMaterias()" >Aceptar</button>
+</div>
