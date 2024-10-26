@@ -20,6 +20,7 @@ export class ListEstudiantesCompartidosComponent implements OnInit {
   listProfesores: Profesor[];
   loading: boolean = false;
   cedula: string;
+  name: string;
 
   constructor(private consultMateriaService: ConsultMateriaService,
     private consultProfesoresService: ConsultProfesoresService,
@@ -28,6 +29,7 @@ export class ListEstudiantesCompartidosComponent implements OnInit {
     private router: Router) {
     this.route.paramMap.subscribe(params => {
       this.cedula = String(params.get('cedula'));
+      this.name = String(params.get('name'));
     });
   }
 
@@ -76,7 +78,7 @@ export class ListEstudiantesCompartidosComponent implements OnInit {
   }
 
   replacesValues(cadena: string){
-    return cadena.replace("[", "").replace("'", "").replace("]","");
+    return cadena.replace("[", "").replace("'", "").replace("]","").replace('"',"").replace('"',"");
   }
 
   getProfesores() {

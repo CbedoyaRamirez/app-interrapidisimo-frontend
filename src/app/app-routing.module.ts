@@ -10,8 +10,8 @@ import { ListEstudiantesCompartidosComponent } from './list-estudiantes-comparti
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'home/:name/:cedula', component: HomeComponent },
-  { path: 'listEstudiantes', component: ListEstudiantesComponent },
-  { path: 'listEstudiantesCompartidos/:cedula', component: ListEstudiantesCompartidosComponent },
+  { path: 'listEstudiantes/:name/:cedula', component: ListEstudiantesComponent },
+  { path: 'listEstudiantesCompartidos/:name/:cedula', component: ListEstudiantesCompartidosComponent },
   { path: '**', component: NoFoundComponent }
 ];
 

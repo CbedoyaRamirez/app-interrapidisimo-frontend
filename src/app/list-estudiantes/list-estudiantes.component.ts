@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConsultEstudianteService } from 'src/services/consultEstudiante.services';
 import { ConsultMateriaService } from 'src/services/consultMaterias.services';
 import { ConsultProfesoresService } from 'src/services/consultProfesor.services';
+import { UtilService } from 'src/services/util.services';
 import { Estudiante } from 'src/shared/interfaces/IEstudiante';
 import { Materia } from 'src/shared/interfaces/IMateria';
 import { Profesor } from 'src/shared/interfaces/IProfesor';
@@ -19,12 +20,23 @@ export class ListEstudiantesComponent implements OnInit {
   listMaterias: Materia[];
   listProfesores: Profesor[];
   loading: boolean = false;
+  cedula: string;
+  name: string;
+
   constructor(private consultMateriaService: ConsultMateriaService,
     private consultProfesoresService: ConsultProfesoresService,
     private consultEstudianteService: ConsultEstudianteService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute,
+    private utilService: UtilService) { 
+      this.route.paramMap.subscribe(params => {
+        this.cedula = String(params.get('cedula'));
+        this.name = String(params.get('name'));
+      });
+    }
 
   ngOnInit(): void {
+    this.utilService.setGlobalLoadind(true);
     this.getMaterias();
   }
 
@@ -48,6 +60,7 @@ export class ListEstudiantesComponent implements OnInit {
       next: (data) => {
         this.listaMateriasEstudiante = data;
         this.loading = true;
+        this.utilService.setGlobalLoadind(false);
       },
       error: (error) => {
         Swal.fire({

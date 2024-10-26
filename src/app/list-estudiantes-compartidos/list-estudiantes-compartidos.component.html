@@ -1,8 +1,15 @@
+<header>
+    <div class="menu">
+        <ul>
+            <li [routerLink]="['/home', name, cedula]"><a><-- Ir atras</a></li>
+        </ul>
+    </div>
+</header>
 <div *ngIf="!loading" >
     <h1>Cargando.....</h1>
 </div>
 <div class="container"  *ngIf="loading" >
-    <h2>Listado de Estudiante por Materias</h2>
+    <h2>Estudiantes con quien compartes materias</h2>
     <table>
         <thead>
             <tr>

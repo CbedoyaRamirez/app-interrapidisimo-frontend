@@ -1,10 +1,10 @@
 <header>
     <div class="menu">
         <ul>
-            <li [routerLink]="['/listEstudiantes']"><a>Ver registro estudiantes</a></li>
-            <li [routerLink]="['/listEstudiantesCompartidos', cedula]"> <a>quien compartes clase?</a> </li>
+            <li [routerLink]="['/listEstudiantes', name,cedula]"><a>Ver registro estudiantes</a></li>
+            <li [routerLink]="['/listEstudiantesCompartidos', name,cedula]"> <a>con quien compartes clase?</a> </li>
         </ul>
-    </div>
+    </div> 
 </header>
 
 <div class="card-container">

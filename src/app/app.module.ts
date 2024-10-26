@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListEstudiantesComponent } from './list-estudiantes/list-estudiantes.component';
 import { ListEstudiantesCompartidosComponent } from './list-estudiantes-compartidos/list-estudiantes-compartidos.component';
+import { GlobalLoadingComponent } from './global-loading/global-loading.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ListEstudiantesCompartidosComponent } from './list-estudiantes-comparti
     LoginComponent,
     ListEstudiantesComponent,
     ListEstudiantesCompartidosComponent,
+    GlobalLoadingComponent,
   ],
   imports: [
     BrowserModule,

@@ -112,6 +112,9 @@ export class HomeComponent implements OnInit {
   }
 
   getCheckMateria(event: boolean, id: number) {
+    if(this.acceptMaterias()) {
+      return;
+    }
     this.isChecked = event;
     if (this.isChecked) {
       if (this.validateNameProfesor(this.listMaterias[id])) {
@@ -172,24 +175,18 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  acceptMaterias() {
+  acceptMaterias() :boolean {
+    let accept : boolean = false;
     let arrayCount = this.listMaterias.filter(mat => mat.checked === true).length;
     let count = 0;
-    if (arrayCount > 3) {
+    if (arrayCount >= 3) {
       Swal.fire({
         icon: "error",
         text: "No puede seleccionar mas de tres materias",
       });
-      return;
+      return accept = true;
     }
-    if (arrayCount <= 2) {
-      Swal.fire({
-        icon: "error",
-        text: "Debe seleccionar al menos tres materias",
-      });
-      return;
-    }
-
+    return accept;
   }
 
   validateNameProfesor(matProf: Materia): boolean {
@@ -220,12 +217,12 @@ export class HomeComponent implements OnInit {
         this.consultEstudianteService.deleteMateriaEstudiante(item.id || 0).subscribe({
           next: (data) => {
             Swal.fire("Eliminado", "", "success");
-            this.getMateriasEstudiante();
+            this.getMaterias();
           },
           error: (error) => {
             if(error.status === 200){
               Swal.fire("Eliminado", "", "success");
-              this.getMateriasEstudiante();
+              this.getMaterias();
             }else{ 
               Swal.fire("Error al momento de eliminar la materia", "", "error");
 
