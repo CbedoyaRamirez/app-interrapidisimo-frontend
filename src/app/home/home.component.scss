@@ -2,9 +2,70 @@
     text-align: center;
 }
 
+header {
+    background-color: #007bff; 
+    padding: 10px 20px; 
+}
+
+.menu {
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+
+.menu ul {
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    display: flex; 
+    justify-content: space-around; 
+}
+
+.menu li {
+    position: relative; 
+}
+
+.menu a {
+    text-decoration: none;
+    color: white; 
+    font-weight: bold; 
+    padding: 10px 15px; 
+    transition: background-color 0.3s ease; 
+}
+
+.menu a:hover {
+    background-color: rgba(255, 255, 255, 0.2); 
+    border-radius: 5px;
+}
+
+.menu a:active {
+    background-color: rgba(255, 255, 255, 0.3); 
+}
+
 .card-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    flex-wrap: wrap;
+
+    &--button {
+        width: 120px;
+        height: 30px;
+        margin-left: 30px;
+        border-radius: 10px;
+        color: #fff;
+        background-color: rgb(78, 105, 76);
+        cursor: pointer;
+    }
+
+    &--buttonOk {
+        width: 120px;
+        height: 30px;
+        margin-left: 30px;
+        border-radius: 10px;
+        color: #fff;
+        background-color: rgb(34, 62, 223);
+        cursor: pointer;
+    }
+
 }
 
 .card-materia {
@@ -31,13 +92,75 @@
 
 .button {
     text-align: center;
+    margin-bottom: 60px;
 
     button {
         width: 180px;
         height: 60px;
+        margin-left: 30px;
         border-radius: 10px;
         color: #fff;
         background-color: rgb(91, 117, 175);
         cursor: pointer;
     }
 }
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 60px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; 
+}
+
+th, td {
+    border: 1px solid #dee2e6;
+    padding: 12px 15px; 
+    text-align: left;
+}
+
+th {
+    background-color: #007bff; 
+    color: white; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
+
+tr {
+    transition: background-color 0.3s ease; 
+}
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+  }
+
+@media (max-width: 600px) {
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        flex-wrap: wrap;
+    }
+}
+
+/* Media Queries para tablets (entre 601px y 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        flex-wrap: wrap;
+    }
+}
+

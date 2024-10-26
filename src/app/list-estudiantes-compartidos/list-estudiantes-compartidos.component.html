@@ -1,0 +1,21 @@
+<div *ngIf="!loading" >
+    <h1>Cargando.....</h1>
+</div>
+<div class="container"  *ngIf="loading" >
+    <h2>Listado de Estudiante por Materias</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Materia</th>
+                <th>Nombre Estudiante</th>
+            </tr>
+        </thead>
+        <tbody id="table-body" *ngFor="let item of listaMateriasEstudiante; let i = index">
+            <td>{{item.materia}}</td>
+            <td>{{item.name}}</td>
+        </tbody>
+    </table>
+</div>
+<div class="button">
+    <button (click)="exit()">Salir</button>
+</div>

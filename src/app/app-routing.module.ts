@@ -4,10 +4,14 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NoFoundComponent } from './no-found/no-found.component';
 import { LoginComponent } from './login/login.component';
+import { ListEstudiantesComponent } from './list-estudiantes/list-estudiantes.component';
+import { ListEstudiantesCompartidosComponent } from './list-estudiantes-compartidos/list-estudiantes-compartidos.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home/:name/:cedula', component: HomeComponent },
+  { path: 'listEstudiantes', component: ListEstudiantesComponent },
+  { path: 'listEstudiantesCompartidos/:cedula', component: ListEstudiantesCompartidosComponent },
   { path: '**', component: NoFoundComponent }
 ];
 

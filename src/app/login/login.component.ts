@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 })
 export class LoginComponent implements OnInit {
   nameUser: string = '';
+  numberCedula: string = '';
 
   constructor(private router: Router){
 
@@ -17,6 +18,11 @@ export class LoginComponent implements OnInit {
   catchValueUser(event: Event) {
     const valueTarget = event.target as HTMLInputElement;
     this.nameUser = valueTarget.value;
+  }
+
+  catchValueCedula(event: Event) {
+    const valueTarget = event.target as HTMLInputElement;
+    this.numberCedula = valueTarget.value;
   }
   
   login(){
@@ -31,24 +37,24 @@ export class LoginComponent implements OnInit {
         confirmButtonText: "Ingresar"
       }).then((result) => {
         if (result.isConfirmed) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home',this.nameUser, this.numberCedula]);
         }
       });
     }
   }
 
-
   validateName() :boolean {
-    if(String(this.nameUser).trim() === '') {
+    if(String(this.nameUser).trim() === '' || String(this.numberCedula).trim() === '') {
       Swal.fire({
         icon: "error",
         title: "Error !!!",
-        text: "Favor ingresar el nombre",
+        text: "Favor ingresar el nombre o cedula",
       });
       return false;
     }
     return true;
   }
+
   ngOnInit(): void {
   }
 

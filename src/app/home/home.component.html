@@ -1,21 +1,50 @@
-<div class="title" >
-    <h1>Elegir solamente 3 materias</h1>
-</div>
+<header>
+    <div class="menu">
+        <ul>
+            <li [routerLink]="['/listEstudiantes']"><a>Ver registro estudiantes</a></li>
+            <li [routerLink]="['/listEstudiantesCompartidos', cedula]"> <a>quien compartes clase?</a> </li>
+        </ul>
+    </div>
+</header>
+
 <div class="card-container">
-    <div class="card-materia" *ngFor="let item of listMaterias; let i = index" >
+    <div class="card-materia" *ngFor="let item of listMaterias; let i = index">
         <label>Nombre Materia : {{item.nombre}}</label>
         <label>Creditos Materia : {{item.creditos}}</label>
-        <label for="" style="color: blue;" >
-            Elegir materia
-            <input type="checkbox"  (change)="getCheckMateria($event, i)" />
-        </label>
-        <div  >
-            <div class="card-profesores"  *ngFor="let itemProf of item.profesores">
+        <div>
+            <div class="card-profesores" *ngFor="let itemProf of item.profesores">
                 <label>Nombre Profesor : {{itemProf.nombres}}</label>
-            </div>            
+            </div>
         </div>
+        <label for="" style="color: blue;">
+            <!--
+                Elegir materia
+                <input type="checkbox"  (change)="getCheckMateria($event, i)" />
+            -->
+            <button class="card-container--button" [ngClass]="item.checked ? 'card-container--buttonOk' : ''"
+                (click)="getCheckMateria(true, i)">Escojer materia</button>
+        </label>
     </div>
 </div>
-<div class="button" >
-    <button (click)="acceptMaterias()" >Guardar </button>
+<div class="container">
+    <h2>Listado de Materias y Profesores</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Materia</th>
+                <th>Profesor</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="table-body" *ngFor="let item of listaMateriasEstudiante; let i = index">
+            <td>{{getNombreMateria(item.materia_id)}}</td>
+            <td>{{getNombreProfesor(item.profesor_id)}}</td>
+            <td>
+                <button (click)="deleteSelection(item)">Eliminar</button>
+            </td>
+        </tbody>
+    </table>
+</div>
+<div class="button">
+    <button (click)="exit()">Salir</button>
 </div>

@@ -1,5 +1,6 @@
 <div class="inter-register">
-    <h3>Registro en linea</h3>
-    <input placeholder="Escriba su nombre" (change)="catchValueUser($event)"  />
+    <h1>Registro en linea</h1>
+    <input class="inter-register--input" placeholder="Escriba su nombre" (change)="catchValueUser($event)"  />
+    <input class="inter-register--input" placeholder="Escriba su cedula (solo números)" (change)="catchValueCedula($event)"  />
     <button class="inter-button"  (click)="login()" >Ingresar</button>
   </div>

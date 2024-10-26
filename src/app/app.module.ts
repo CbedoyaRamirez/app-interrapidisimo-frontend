@@ -7,6 +7,8 @@ import { HomeComponent } from './home/home.component';
 import { NoFoundComponent } from './no-found/no-found.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ListEstudiantesComponent } from './list-estudiantes/list-estudiantes.component';
+import { ListEstudiantesCompartidosComponent } from './list-estudiantes-compartidos/list-estudiantes-compartidos.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     NoFoundComponent,
     LoginComponent,
+    ListEstudiantesComponent,
+    ListEstudiantesCompartidosComponent,
   ],
   imports: [
     BrowserModule,

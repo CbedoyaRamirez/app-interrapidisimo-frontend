@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { ConsultEstudianteService } from 'src/services/consultEstudiante.services';
 import { ConsultMateriaService } from 'src/services/consultMaterias.services';
 import { ConsultProfesoresService } from 'src/services/consultProfesor.services';
-import { Materia } from 'src/shared/IMateria';
-import { Profesor } from 'src/shared/IProfesor';
+import { Estudiante } from 'src/shared/interfaces/IEstudiante';
+import { Materia, MateriaElejida } from 'src/shared/interfaces/IMateria';
+import { Profesor } from 'src/shared/interfaces/IProfesor';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -15,20 +19,36 @@ export class HomeComponent implements OnInit {
   listMaterias: Materia[];
   listMateriasProfesores: Profesor[];
   listProfesores: Profesor[];
+  listaMateriasEstudiante: Estudiante[];
+  listMateriasEscogidas: MateriaElejida[] = [];
   isChecked: boolean = false;
+  cedula: string = '';
+  name: string = '';
+  loading: boolean = false;
 
   constructor(private consultMateriaService: ConsultMateriaService,
-    private consultProfesoresService: ConsultProfesoresService
-  ) { }
+    private consultProfesoresService: ConsultProfesoresService,
+    private consultEstudianteService: ConsultEstudianteService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+
+    this.route.paramMap.subscribe(params => {
+      this.cedula = String(params.get('cedula'));
+      this.name = String(params.get('name'));
+    });
+  }
 
   ngOnInit(): void {
     this.getMaterias();
+    
   }
 
   getMaterias() {
     this.consultMateriaService.getMaterias().subscribe({
       next: (data) => {
         this.listMaterias = data;
+        this.getMateriasEstudiante();
         this.getProfesores();
       },
       error: (error) => {
@@ -38,6 +58,35 @@ export class HomeComponent implements OnInit {
         });
       }
     })
+  }
+
+  getMateriasEstudiante(){
+    this.consultEstudianteService.getEstudiante().subscribe({
+      next: (data) => {
+        this.listaMateriasEstudiante = data.filter(data => Number(data.cedula) === Number(this.cedula));
+        this.listaMateriasEstudiante.map(matEstu => {
+          this.listMaterias.map(mat => {
+            if(matEstu.materia_id === mat.id){
+              mat.checked = true
+            }
+          })
+        })
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: "error",
+          text: "No tiene materias asignadas",
+        });
+      }
+    })
+  }
+
+  getNombreMateria(id: number){
+    return this.listMaterias.find(mat => mat.id === id)?.nombre;
+  }
+
+  getNombreProfesor(id: number){
+    return this.listProfesores.find(mat => mat.id === id)?.nombres;
   }
 
   getProfesores() {
@@ -62,9 +111,52 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  getCheckMateria(event: Event, id: number) {
-    this.isChecked = (event.target as HTMLInputElement).checked;
-    this.listMaterias[id].checked = this.isChecked;
+  getCheckMateria(event: boolean, id: number) {
+    this.isChecked = event;
+    if (this.isChecked) {
+      if (this.validateNameProfesor(this.listMaterias[id])) {
+        Swal.fire({
+          icon: "error",
+          text: "No puedes tomar clase con el mismo profesor. Favor elegir otra materia",
+        });
+        this.listMaterias[id].checked = !this.isChecked;
+      } else {
+        this.listMateriasEscogidas.push({
+          id: id,
+          checked: true,
+          nombre: this.listMaterias[id].nombre,
+          creditos: this.listMaterias[id].creditos,
+          profesor: this.listMaterias[id].profesores[0].nombres,
+          profesorID: this.listMaterias[id].profesores[0].id,
+          showDetails: true
+        })
+        this.listMaterias[id].checked = this.isChecked;
+
+          let objEstudiante: Estudiante = {
+            cedula: Number(this.cedula),
+            nombre: this.name,
+            materia_id: this.listMaterias[id].id,
+            profesor_id: this.listMaterias[id].profesores[0].id
+          }
+          this.consultEstudianteService.postEstudiante(objEstudiante).subscribe({
+            next: (data) => {
+              Swal.fire({
+                icon: "success",
+                text: "Se guardo la materia exitosamente",
+              });
+              this.getMateriasEstudiante();
+            },
+            error: (error) => {
+              Swal.fire({
+                icon: "error",
+                text: "Error al momento de grabar la materia",
+              });
+            }
+          })
+
+      }
+    }
+
   }
 
   getProfesoresMateria(id: number, index: number) {
@@ -77,11 +169,12 @@ export class HomeComponent implements OnInit {
   resetDetails() {
     this.listMaterias.map(mat => {
       mat.showDetails = false;
-    }) 
+    })
   }
 
   acceptMaterias() {
     let arrayCount = this.listMaterias.filter(mat => mat.checked === true).length;
+    let count = 0;
     if (arrayCount > 3) {
       Swal.fire({
         icon: "error",
@@ -96,6 +189,59 @@ export class HomeComponent implements OnInit {
       });
       return;
     }
+
+  }
+
+  validateNameProfesor(matProf: Materia): boolean {
+    let findProf: boolean = false;
+    let listMate = this.listMaterias.filter(mat => mat.checked === true);
+    if (listMate.length > 0) {
+      listMate.map(mat => {
+        mat.profesores.map(prof => {
+          if (matProf.profesores.includes(prof)) {
+            findProf = true;
+          }
+        })
+      })
+    }
+    return findProf;
+  }
+
+  deleteSelection(item: Estudiante) {
+    Swal.fire({
+      title: "Desea eliminar esta materia?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Eliminar",
+      denyButtonText: `No eliminar`
+    }).then((result) => {
+      
+      if (result.isConfirmed) {
+        this.consultEstudianteService.deleteMateriaEstudiante(item.id || 0).subscribe({
+          next: (data) => {
+            Swal.fire("Eliminado", "", "success");
+            this.getMateriasEstudiante();
+          },
+          error: (error) => {
+            if(error.status === 200){
+              Swal.fire("Eliminado", "", "success");
+              this.getMateriasEstudiante();
+            }else{ 
+              Swal.fire("Error al momento de eliminar la materia", "", "error");
+
+            }
+          }
+        })
+        
+      } else if (result.isDenied) {
+        Swal.fire("Materia no eliminada", "", "info");
+      }
+    });    
+
+  }
+
+  exit() {
+    this.router.navigate(['']);
   }
 
 }
