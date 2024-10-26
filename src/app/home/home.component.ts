@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
     this.consultProfesoresService.getProfesores().subscribe({
       next: (data) => {
         this.listProfesores = data;
-        //this.complementData(this.listMaterias);
+        this.complementData(this.listMaterias);
       },
       error: (error) => {
         Swal.fire({
@@ -52,6 +52,13 @@ export class HomeComponent implements OnInit {
           text: "Error consultando los profesores",
         });
       }
+    })
+  }
+
+  complementData(listMaterias: Materia[]) {
+    listMaterias.map(mat => {
+      let profes = this.listProfesores.filter(prof => prof.id_materia1 === mat.id || prof.id_materia2 === mat.id);
+      mat.profesores = profes;
     })
   }
 
