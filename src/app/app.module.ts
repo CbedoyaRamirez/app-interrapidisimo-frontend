@@ -6,10 +6,11 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NoFoundComponent } from './no-found/no-found.component';
 import { LoginComponent } from './login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ListEstudiantesComponent } from './list-estudiantes/list-estudiantes.component';
 import { ListEstudiantesCompartidosComponent } from './list-estudiantes-compartidos/list-estudiantes-compartidos.component';
 import { GlobalLoadingComponent } from './global-loading/global-loading.component';
+import { httpinterceptor } from 'src/shared/interceptor/httpinterceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,13 @@ import { GlobalLoadingComponent } from './global-loading/global-loading.componen
     AppRoutingModule,
     HttpClientModule 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: httpinterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
