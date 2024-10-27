@@ -12,7 +12,6 @@ export class ConsultMateriaService {
   constructor(private http: HttpClient) { }
   
   getMaterias(): Observable<Materia[]> {
-    //return this.http.get<Materia[]>("api/materias");
     return this.http.get<Materia[]>(CONSULTAMATERIAS);
   }
   

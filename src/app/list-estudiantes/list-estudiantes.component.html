@@ -2,6 +2,7 @@
     <div class="menu">
         <ul>
             <li [routerLink]="['/home', name, cedula]"><a><-- Ir atras</a></li>
+            <li [routerLink]="['/']"> <a>Salir</a> </li>
         </ul>
     </div>
 </header>
@@ -24,7 +25,4 @@
             <td>{{getNombreProfesor(item.profesor_id)}}</td>
         </tbody>
     </table>
-</div>
-<div class="button">
-    <button (click)="exit()">Salir</button>
 </div>

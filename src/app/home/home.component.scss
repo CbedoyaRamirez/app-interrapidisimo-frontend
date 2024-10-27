@@ -3,43 +3,48 @@
 }
 
 header {
-    background-color: #007bff; 
-    padding: 10px 20px; 
+    background-color: #007bff;
+    padding: 10px 20px;
+    -webkit-box-shadow: -1px 17px 20px -7px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 17px 20px -7px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px 17px 20px -7px rgba(0, 0, 0, 0.75);
+    margin-bottom: 100px;
 }
 
 .menu {
-    max-width: 800px; 
-    margin: 0 auto; 
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .menu ul {
-    list-style: none; 
-    padding: 0; 
-    margin: 0; 
-    display: flex; 
-    justify-content: space-around; 
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
 }
 
 .menu li {
-    position: relative; 
+    position: relative;
     cursor: pointer;
+    font-size: 1.5rem;
 }
 
 .menu a {
     text-decoration: none;
-    color: white; 
-    font-weight: bold; 
-    padding: 10px 15px; 
-    transition: background-color 0.3s ease; 
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
 }
 
 .menu a:hover {
-    background-color: rgba(255, 255, 255, 0.2); 
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
 }
 
 .menu a:active {
-    background-color: rgba(255, 255, 255, 0.3); 
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .card-container {
@@ -48,6 +53,7 @@ header {
     grid-template-columns: repeat(5, 1fr);
     justify-content: center;
     flex-wrap: wrap;
+    margin-bottom: 30px;
 
     &--button {
         width: 120px;
@@ -72,7 +78,7 @@ header {
 }
 
 .card-materia {
-    width: 250px;
+    width: 350px;
     display: flex;
     gap: 10px;
     justify-content: space-between;
@@ -81,6 +87,7 @@ header {
     padding: 30px;
     border-radius: 10px;
     border: 1px solid #a80000;
+    font-size: 1.3rem;
 }
 
 .card-profesores {
@@ -105,6 +112,7 @@ header {
         color: #fff;
         background-color: rgb(91, 117, 175);
         cursor: pointer;
+        font-size: 2rem;
     }
 }
 
@@ -120,25 +128,27 @@ header {
 
 table {
     width: 100%;
-    border-collapse: collapse; 
+    border-collapse: collapse;
+    margin-bottom: 30px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #dee2e6;
-    padding: 12px 15px; 
+    padding: 12px 15px;
     text-align: left;
 }
 
 th {
-    background-color: #007bff; 
-    color: white; 
-    font-weight: bold; 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 tr {
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease;
 }
 
 .icon {
@@ -148,7 +158,7 @@ tr {
     stroke-width: 0;
     stroke: currentColor;
     fill: currentColor;
-  }
+}
 
 @media (max-width: 600px) {
     .card-container {
@@ -166,4 +176,3 @@ tr {
         flex-wrap: wrap;
     }
 }
-

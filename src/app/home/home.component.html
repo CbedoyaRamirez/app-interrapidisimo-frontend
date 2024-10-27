@@ -3,6 +3,7 @@
         <ul>
             <li [routerLink]="['/listEstudiantes', name,cedula]"><a>Ver registro estudiantes</a></li>
             <li [routerLink]="['/listEstudiantesCompartidos', name,cedula]"> <a>con quien compartes clase?</a> </li>
+            <li [routerLink]="['/']"> <a>Salir</a> </li>
         </ul>
     </div> 
 </header>
@@ -44,7 +45,4 @@
             </td>
         </tbody>
     </table>
-</div>
-<div class="button">
-    <button (click)="exit()">Salir</button>
 </div>
