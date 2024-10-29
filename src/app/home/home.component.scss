@@ -75,10 +75,20 @@ header {
         cursor: pointer;
     }
 
+    &--buttonUpdate {
+        width: 120px;
+        height: 30px;
+        margin-left: 30px;
+        border-radius: 10px;
+        color: #fff;
+        background-color: rgb(48, 46, 175);
+        cursor: pointer;
+    }
+
 }
 
 .card-materia {
-    width: 350px;
+    
     display: flex;
     gap: 10px;
     justify-content: space-between;
@@ -97,7 +107,7 @@ header {
 }
 
 .card-materia:hover {
-    border: 3px solid #0f0f0f;
+    //border: 3px solid #0f0f0f;
 }
 
 .button {
@@ -160,6 +170,22 @@ tr {
     fill: currentColor;
 }
 
+@media (max-width: 1700px) {
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 900px) {
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        flex-wrap: wrap;
+    }
+}
+
 @media (max-width: 600px) {
     .card-container {
         display: grid;
@@ -168,11 +194,3 @@ tr {
     }
 }
 
-/* Media Queries para tablets (entre 601px y 1024px) */
-@media (min-width: 601px) and (max-width: 1024px) {
-    .card-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        flex-wrap: wrap;
-    }
-}

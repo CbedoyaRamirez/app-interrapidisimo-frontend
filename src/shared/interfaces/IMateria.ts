@@ -6,7 +6,6 @@ export interface Materia {
   creditos: number;
   checked: boolean;
   profesores: Profesor[];
-  showDetails: boolean;
 }
 
 

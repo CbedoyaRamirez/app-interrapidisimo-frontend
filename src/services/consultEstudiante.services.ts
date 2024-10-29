@@ -25,7 +25,7 @@ export class ConsultEstudianteService {
   }  
 
   getCompañerosMateriaEstudiante(cedula: number): Observable<EstudianteCompartidos[]> {
-    return this.http.get<EstudianteCompartidos[]>(`${CONSULTAESTUDIANTES}/companeros?cedula=${cedula}`);
+    return this.http.get<EstudianteCompartidos[]>(`${CONSULTAESTUDIANTES}/${cedula}`);
   }    
   
 }

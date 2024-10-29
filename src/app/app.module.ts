@@ -11,6 +11,9 @@ import { ListEstudiantesComponent } from './list-estudiantes/list-estudiantes.co
 import { ListEstudiantesCompartidosComponent } from './list-estudiantes-compartidos/list-estudiantes-compartidos.component';
 import { GlobalLoadingComponent } from './global-loading/global-loading.component';
 import { httpinterceptor } from 'src/shared/interceptor/httpinterceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog'; 
+
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { httpinterceptor } from 'src/shared/interceptor/httpinterceptor';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule 
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDialogModule 
   ],
   providers: [
     {

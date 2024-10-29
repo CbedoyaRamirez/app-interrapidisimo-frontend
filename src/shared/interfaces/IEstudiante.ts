@@ -1,12 +1,12 @@
 export interface Estudiante {
   id?: number,
-  cedula: number,
+  cedula: string,
   nombre: string,
-  materia_id: number,
-  profesor_id: number
+  materia_Id: number,
+  profesor_Id: number
 }
 
 export interface EstudianteCompartidos {
-  name: string,
-  materia: string,
+  nombreEstudiante: string,
+  nombreMateria: string,
 }

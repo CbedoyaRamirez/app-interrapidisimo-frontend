@@ -24,6 +24,8 @@
             -->
             <button class="card-container--button" [ngClass]="item.checked ? 'card-container--buttonOk' : ''"
                 (click)="getCheckMateria(true, i)">Escojer materia</button>
+            <button class="card-container--buttonUpdate" 
+                (click)="openModalUpdate(item)">Actualizar materia</button>
         </label>
     </div>
 </div>
@@ -38,8 +40,8 @@
             </tr>
         </thead>
         <tbody id="table-body" *ngFor="let item of listaMateriasEstudiante; let i = index">
-            <td>{{getNombreMateria(item.materia_id)}}</td>
-            <td>{{getNombreProfesor(item.profesor_id)}}</td>
+            <td>{{getNombreMateria(item.materia_Id)}}</td>
+            <td>{{getNombreProfesor(item.profesor_Id)}}</td>
             <td>
                 <button (click)="deleteSelection(item)">Eliminar</button>
             </td>

@@ -1,0 +1,11 @@
+<div  >
+    <form class="container">
+        <h1>Actualizar Materia</h1>
+        <label for="">Nombre Materia</label>
+        <input type="text" value="{{nombre}}" (change)="capturarNombre($event)" >
+        <label for="">Creditos</label>
+        <input type="number" value="{{credito}}" (change)="capturarCredito($event)" >
+        <button class="button" (click)="update()" >Actualizar</button>
+    </form>    
+    <button class="button--salir" (click)="salir()" >Cerrar</button>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { ConsultEstudianteService } from 'src/services/consultEstudiante.services';
@@ -8,6 +9,7 @@ import { Estudiante } from 'src/shared/interfaces/IEstudiante';
 import { Materia, MateriaElejida } from 'src/shared/interfaces/IMateria';
 import { Profesor } from 'src/shared/interfaces/IProfesor';
 import Swal from 'sweetalert2'
+import { ModalUpdateMateriaComponent } from './modal-update-materia/modal-update-materia.component';
 
 @Component({
   selector: 'app-home',
@@ -30,7 +32,8 @@ export class HomeComponent implements OnInit {
     private consultProfesoresService: ConsultProfesoresService,
     private consultEstudianteService: ConsultEstudianteService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private __dialog: MatDialog
   ) {
 
     this.route.paramMap.subscribe(params => {
@@ -41,7 +44,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMaterias();
-    
+
   }
 
   getMaterias() {
@@ -60,13 +63,13 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  getMateriasEstudiante(){
+  getMateriasEstudiante() {
     this.consultEstudianteService.getEstudiante().subscribe({
       next: (data) => {
         this.listaMateriasEstudiante = data.filter(data => Number(data.cedula) === Number(this.cedula));
         this.listaMateriasEstudiante.map(matEstu => {
           this.listMaterias.map(mat => {
-            if(matEstu.materia_id === mat.id){
+            if (matEstu.materia_Id === mat.id) {
               mat.checked = true
             }
           })
@@ -81,11 +84,11 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  getNombreMateria(id: number){
+  getNombreMateria(id: number) {
     return this.listMaterias.find(mat => mat.id === id)?.nombre;
   }
 
-  getNombreProfesor(id: number){
+  getNombreProfesor(id: number) {
     return this.listProfesores.find(mat => mat.id === id)?.nombres;
   }
 
@@ -106,13 +109,26 @@ export class HomeComponent implements OnInit {
 
   complementData(listMaterias: Materia[]) {
     listMaterias.map(mat => {
-      let profes = this.listProfesores.filter(prof => prof.id_materia1 === mat.id || prof.id_materia2 === mat.id);
+      let profes = this.listProfesores.filter(prof => prof.id_Materia1 === mat.id || prof.id_Materia2 === mat.id);
       mat.profesores = profes;
     })
   }
 
+  openModalUpdate(item: Materia) {
+    const dialogRef = this.__dialog.open(ModalUpdateMateriaComponent, {
+      width: '30%',
+      height: '35%',
+      data: item,
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      dialogRef.close();
+      this.getMaterias();
+    })
+  }
+
   getCheckMateria(event: boolean, id: number) {
-    if(this.acceptMaterias()) {
+    if (this.acceptMaterias()) {
       return;
     }
     this.isChecked = event;
@@ -135,27 +151,28 @@ export class HomeComponent implements OnInit {
         })
         this.listMaterias[id].checked = this.isChecked;
 
-          let objEstudiante: Estudiante = {
-            cedula: Number(this.cedula),
-            nombre: this.name,
-            materia_id: this.listMaterias[id].id,
-            profesor_id: this.listMaterias[id].profesores[0].id
+        let objEstudiante: Estudiante = {
+          id: 0,
+          cedula: String(this.cedula),
+          nombre: this.name,
+          materia_Id: this.listMaterias[id].id,
+          profesor_Id: this.listMaterias[id].profesores[0].id
+        }
+        this.consultEstudianteService.postEstudiante(objEstudiante).subscribe({
+          next: (data) => {
+            Swal.fire({
+              icon: "success",
+              text: "Se guardo la materia exitosamente",
+            });
+            this.getMateriasEstudiante();
+          },
+          error: (error) => {
+            Swal.fire({
+              icon: "error",
+              text: "Error al momento de grabar la materia",
+            });
           }
-          this.consultEstudianteService.postEstudiante(objEstudiante).subscribe({
-            next: (data) => {
-              Swal.fire({
-                icon: "success",
-                text: "Se guardo la materia exitosamente",
-              });
-              this.getMateriasEstudiante();
-            },
-            error: (error) => {
-              Swal.fire({
-                icon: "error",
-                text: "Error al momento de grabar la materia",
-              });
-            }
-          })
+        })
 
       }
     }
@@ -164,19 +181,19 @@ export class HomeComponent implements OnInit {
 
   getProfesoresMateria(id: number, index: number) {
     this.resetDetails();
-    let profes = this.listProfesores.filter(prof => prof.id_materia1 === id || prof.id_materia2 === id);
+    let profes = this.listProfesores.filter(prof => prof.id_Materia1 === id || prof.id_Materia2 === id);
     this.listMateriasProfesores = profes;
-    this.listMaterias[index].showDetails = true;
+    //this.listMaterias[index].showDetails = true;
   }
 
   resetDetails() {
     this.listMaterias.map(mat => {
-      mat.showDetails = false;
+      //mat.showDetails = false;
     })
   }
 
-  acceptMaterias() :boolean {
-    let accept : boolean = false;
+  acceptMaterias(): boolean {
+    let accept: boolean = false;
     let arrayCount = this.listMaterias.filter(mat => mat.checked === true).length;
     let count = 0;
     if (arrayCount >= 3) {
@@ -212,7 +229,7 @@ export class HomeComponent implements OnInit {
       confirmButtonText: "Eliminar",
       denyButtonText: `No eliminar`
     }).then((result) => {
-      
+
       if (result.isConfirmed) {
         this.consultEstudianteService.deleteMateriaEstudiante(item.id || 0).subscribe({
           next: (data) => {
@@ -220,20 +237,20 @@ export class HomeComponent implements OnInit {
             this.getMaterias();
           },
           error: (error) => {
-            if(error.status === 200){
+            if (error.status === 200) {
               Swal.fire("Eliminado", "", "success");
               this.getMaterias();
-            }else{ 
+            } else {
               Swal.fire("Error al momento de eliminar la materia", "", "error");
 
             }
           }
         })
-        
+
       } else if (result.isDenied) {
         Swal.fire("Materia no eliminada", "", "info");
       }
-    });    
+    });
 
   }
 

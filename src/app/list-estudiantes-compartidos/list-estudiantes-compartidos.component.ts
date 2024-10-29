@@ -56,16 +56,14 @@ export class ListEstudiantesCompartidosComponent implements OnInit {
     this.listaMateriasEstudiante = [];
     this.consultEstudianteService.getCompañerosMateriaEstudiante(Number(this.cedula)).subscribe({
       next: (data) => {
-        for (let index = 0; index < data.length; index++) {
-          const element = JSON.stringify(data[index]);
-          const arrayIndex = element.split(",");
+        data.map(d => {
           this.listaMateriasEstudiante.push(
             {
-              name: this.replacesValues(element.split(",")[0]),
-              materia: this.replacesValues(element.split(",")[1]),
+              nombreEstudiante: d.nombreEstudiante,
+              nombreMateria: d.nombreMateria
             }
           )
-        }
+        })
         this.loading = true;
       },
       error: (error) => {
@@ -77,8 +75,8 @@ export class ListEstudiantesCompartidosComponent implements OnInit {
     })
   }
 
-  replacesValues(cadena: string){
-    return cadena.replace("[", "").replace("'", "").replace("]","").replace('"',"").replace('"',"");
+  replacesValues(cadena: string) {
+    return cadena.replace("{", "").replace("'", "").replace("}", "").replace('"', "").replace('"', "");
   }
 
   getProfesores() {

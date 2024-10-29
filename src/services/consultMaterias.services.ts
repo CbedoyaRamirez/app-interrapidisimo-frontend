@@ -10,9 +10,13 @@ import { CONSULTAMATERIAS } from 'src/shared/endpoint';
 export class ConsultMateriaService {
 
   constructor(private http: HttpClient) { }
-  
+
   getMaterias(): Observable<Materia[]> {
     return this.http.get<Materia[]>(CONSULTAMATERIAS);
   }
-  
+
+  updateMateria(item: Materia) {
+    return this.http.put<Materia[]>(`${CONSULTAMATERIAS}/${item.id}`, item);
+  }
+
 }
