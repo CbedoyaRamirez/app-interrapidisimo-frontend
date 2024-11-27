@@ -11,7 +11,7 @@ export class GlobalLoadingComponent implements OnInit {
   loading: boolean = true;
 
   constructor(private utilService: UtilService) { 
-    this.utilService.getGlobalLoading().subscribe((resp) => {
+    this.utilService.loading$.subscribe((resp) => {
       this.loading = resp;
     })
   }

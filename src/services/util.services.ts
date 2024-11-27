@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
 
-  globalLoading: boolean = false;
+  private loadingSubject = new BehaviorSubject<boolean>(false); 
+  public loading$: Observable<boolean> = this.loadingSubject.asObservable();
+  globalLoading = false;
 
   constructor() { }
       
@@ -17,5 +19,12 @@ export class UtilService {
   getGlobalLoading() : Observable<boolean> {
     return of(this.globalLoading);
   }
+  
+  show() {
+    this.loadingSubject.next(true);
+  }
 
+  close() {
+    this.loadingSubject.next(false);
+  }
 }
