@@ -12,7 +12,7 @@ import Swal from 'sweetalert2'
 import { ModalUpdateMateriaComponent } from './modal-update-materia/modal-update-materia.component';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-home',  
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
