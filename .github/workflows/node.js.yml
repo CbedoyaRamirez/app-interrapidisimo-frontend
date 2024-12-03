@@ -33,7 +33,7 @@ jobs:
       - name: connect to AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-session-name: github-actions-rule
+          role-session-name: carlos-aws
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
       - name: sync bucket
