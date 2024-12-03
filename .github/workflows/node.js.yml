@@ -37,7 +37,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
       - name: sync bucket
-        run: aws s3 sync ./dist/ s3://${{ secrets.BUCKET_NAME }} --delete
+        run: aws s3 cp ./dist/ s3://${{ secrets.BUCKET_NAME }} --delete
         
       
       # - uses: actions/setup-node@v4
