@@ -18,7 +18,9 @@ import { ModalUpdateMateriaComponent } from './modal-update-materia/modal-update
 })
 export class HomeComponent implements OnInit { 
 
-    listMaterias: Materia[];
+    listMaterias: Materia[]; 
+
+    
   listMateriasProfesores: Profesor[];
   listProfesores: Profesor[];
   listaMateriasEstudiante: Estudiante[];
