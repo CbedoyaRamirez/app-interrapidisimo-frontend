@@ -24,8 +24,10 @@ jobs:
       - name:  Checkout repo
         uses: actions/checkout@v4
 
-      - name:  Build
-        run: npm run build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.6.0
+      - run: npm run build
 
       - name: connect to AWS
         uses: aws-actions/configure-aws-credentials@v4
