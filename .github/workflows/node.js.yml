@@ -14,7 +14,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.2.2
-      - name : "hola mundo"
+      - name : hola mundo
         run: echo "hola mundo"
-      - name : "Dime la fecha"
+      - name : Dime la fecha
         run: date
+      - name : Muestra el contenido del repositorio
+        run: ls -ls
