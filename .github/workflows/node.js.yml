@@ -27,6 +27,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.6.0
+      - run: npm ci          
       - run: npm run build
 
       - name: connect to AWS
