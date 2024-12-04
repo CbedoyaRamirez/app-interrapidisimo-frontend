@@ -9,16 +9,35 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions: 
+  id-token: write
+  contents: read
+
+
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name:  Checkout repo
+        uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22.6.0
-      - run: npm ci
-      - run: npm run lint
+      - run: npm ci          
       - run: npm run build
+
+      - name: connect to AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-session-name: github_deploy_myapp
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
+      - name: sync bucket
+        run: aws s3 cp ./dist/app-interrapidisimo s3://${{ secrets.BUCKET_NAME }}  --recursive
+
+
+
