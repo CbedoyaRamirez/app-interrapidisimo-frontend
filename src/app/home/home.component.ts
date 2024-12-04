@@ -23,6 +23,8 @@ export class HomeComponent implements OnInit {
   listMateriasProfesores: Profesor[];
 
   
+
+
   listProfesores: Profesor[];
   listaMateriasEstudiante: Estudiante[];
   listMateriasEscogidas: MateriaElejida[] = [];
